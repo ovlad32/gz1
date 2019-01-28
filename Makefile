@@ -32,3 +32,10 @@ bm_mem:
 		$(GOTEST) -gcflags="-m -m" -run none -bench . -benchtime 10s -benchmem -memprofile m.out
 bm_mem3:
 		$(GOTEST) -gcflags="-m -m" -run none -bench BenchmarkTx2 -benchtime 10s -benchmem -memprofile m.out
+#go tool pprof -alloc_space m.out
+
+#pkg: github.com/ovlad32/gz1
+#BenchmarkSplitRawLine-8          2000000              8755 ns/op               0 B/op          0 allocs/op
+#BenchmarkSplitRawLine-8          1000000             11456 ns/op            4096 B/op          1 allocs/op
+#BenchmarkSplitRawLine-8          1000000             10608 ns/op               0 B/op          0 allocs/op
+#BenchmarkSplitRawLine-8          1000000             13240 ns/op               0 B/op          0 allocs/op

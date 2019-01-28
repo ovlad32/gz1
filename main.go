@@ -7,9 +7,11 @@ import (
 	"io"
 	"log"
 	"os"
+	"reflect"
 	"runtime"
 	"sync"
 	"sync/atomic"
+	"unsafe"
 )
 
 func main() {
@@ -139,14 +141,24 @@ func tx2() int {
 	return int(l)
 }
 
+func BytesToString(s *string, b *[]byte) {
+	sth := (*reflect.StringHeader)(unsafe.Pointer(s))
+	slh := (*reflect.SliceHeader)(unsafe.Pointer(b))
+	sth.Data = slh.Data
+	sth.Len = slh.Len
+}
+
 //SplitRawLine ...
 func SplitRawLine(result [][]byte,
 	rawLine []byte,
 	delimiter rune,
 ) [][]byte {
 	startPos := 0
-	for currPos, cr := range string(rawLine) {
-		if cr == delimiter {
+	//var sl string
+	bd := byte(delimiter)
+	//	BytesToString(&sl, &rawLine)
+	for currPos, cr := range rawLine {
+		if cr == bd {
 			result = append(result, rawLine[startPos:currPos])
 			startPos = currPos + 1
 		}

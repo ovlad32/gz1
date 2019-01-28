@@ -49,19 +49,19 @@ func TestSplitRawLine(t *testing.T) {
 	tests := []struct {
 		name      string
 		data      []byte
-		delimiter rune
+		delimiter byte
 		count     int
 		expected  [][]byte
 	}{
 		{name: "5 field case",
 			data:      append(append(append(oneToZero, oneToZero...), oneToZero...), oneToZero...),
-			delimiter: rune(0),
+			delimiter: byte(0),
 			count:     5,
 			expected:  append(append(append(append(append(make([][]byte, 0, 4), oneToNine), oneToNine), oneToNine), oneToNine), empty),
 		},
 		{name: "utf-8",
 			data:      h1,
-			delimiter: rune(0x1F),
+			delimiter: byte(0x1F),
 			count:     2,
 			expected:  append(append(make([][]byte, 0, 2), []byte(h0)), []byte(h0)),
 		},
@@ -164,7 +164,7 @@ func BenchmarkSplitRawLine(t *testing.B) {
 
 	for i := 0; i < t.N; i++ {
 		res := make([][]byte, 0, 300)
-		res = SplitRawLine(res, raw, rune(0x0A))
+		res = SplitRawLine(res, raw, byte(0x0A))
 	}
 
 }

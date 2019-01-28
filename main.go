@@ -151,14 +151,11 @@ func BytesToString(s *string, b *[]byte) {
 //SplitRawLine ...
 func SplitRawLine(result [][]byte,
 	rawLine []byte,
-	delimiter rune,
+	delimiter byte,
 ) [][]byte {
 	startPos := 0
-	//var sl string
-	bd := byte(delimiter)
-	//	BytesToString(&sl, &rawLine)
 	for currPos, cr := range rawLine {
-		if cr == bd {
+		if cr == delimiter {
 			result = append(result, rawLine[startPos:currPos])
 			startPos = currPos + 1
 		}

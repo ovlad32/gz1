@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"compress/gzip"
 	"fmt"
 	"io"
@@ -140,10 +139,18 @@ func tx2() int {
 	return int(l)
 }
 
-func f(a []byte) {
-	ss := bytes.Split(a, []byte{0x1F})
-	if len(ss) == 0 {
-		return
+//SplitRawLine ...
+func SplitRawLine(result [][]byte,
+	rawLine []byte,
+	delimiter rune,
+) [][]byte {
+	startPos := 0
+	for currPos, cr := range string(rawLine) {
+		if cr == delimiter {
+			result = append(result, rawLine[startPos:currPos])
+			startPos = currPos + 1
+		}
 	}
-
+	result = append(result, rawLine[startPos:])
+	return result
 }
